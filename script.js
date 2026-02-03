@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function startCharge() {
         isCharging = true;
         sfxCharge.currentTime = 0;
-        sfxCharge.volume = 0.1;
-        sfxCharge.play().catch(e => console.log("Audio play blocked: ", e));
+        sfxCharge.volume = 0.3; // Increased initial volume
+        sfxCharge.play().catch(e => console.error("Charge Audio play blocked/failed: ", e));
 
         chargeInterval = setInterval(() => {
             if (chargeLevel < 100) {
@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         thunder.style.transform = `scale(${scale})`;
         thunder.querySelector('.thunder-bolt').style.filter = `drop-shadow(0 0 ${glow}px #fefe00) brightness(${1 + chargeLevel / 100})`;
 
-        // Sound intensity
-        sfxCharge.volume = Math.min(0.1 + (chargeLevel / 100) * 0.9, 1.0);
-        sfxCharge.playbackRate = 1 + (chargeLevel / 100) * 0.5;
+        // Sound intensity (Louder curve)
+        sfxCharge.volume = Math.min(0.3 + (chargeLevel / 100) * 0.7, 1.0);
+        sfxCharge.playbackRate = 1 + (chargeLevel / 100) * 0.8; // More aggressive pitch shift
 
         // Intensity Shake
         document.body.classList.remove('shake-level-1', 'shake-level-2', 'shake-level-3');
@@ -104,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Play strike sound
         sfxStrike.currentTime = 0;
-        sfxStrike.play().catch(e => console.log("Audio play blocked: ", e));
+        sfxStrike.volume = 1.0; // Max volume for strike
+        sfxStrike.play().catch(e => console.error("Strike Audio play blocked/failed: ", e));
 
         if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
 
