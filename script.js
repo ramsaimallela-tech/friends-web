@@ -116,11 +116,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = card.dataset;
 
             document.getElementById('detail-name').innerText = data.name;
-            document.getElementById('link-email').href = `mailto:${data.email}`;
-            document.getElementById('link-github').href = data.github;
-            document.getElementById('link-insta').href = data.insta;
-            document.getElementById('link-linkedin').href = data.linkedin;
-            document.getElementById('link-portfolio').href = data.portfolio;
+
+            // Link Helpers
+            const setLink = (id, value, prefix = '') => {
+                const el = document.getElementById(id);
+                if (value && value !== '#') {
+                    el.href = (value.startsWith('http') || value.startsWith('mailto')) ? value : prefix + value;
+                    el.style.display = 'inline-block';
+                } else {
+                    el.style.display = 'none';
+                }
+            };
+
+            setLink('link-email', data.email, 'mailto:');
+            setLink('link-github', data.github, 'https://github.com/');
+            setLink('link-insta', data.insta, 'https://www.instagram.com/');
+            setLink('link-linkedin', data.linkedin, 'https://www.linkedin.com/in/');
+            setLink('link-portfolio', data.portfolio);
 
             // Handle Photo vs Icon
             const detailImg = document.getElementById('detail-img');
