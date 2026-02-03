@@ -120,10 +120,37 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('link-github').href = data.github;
             document.getElementById('link-insta').href = data.insta;
             document.getElementById('link-linkedin').href = data.linkedin;
+            document.getElementById('link-portfolio').href = data.portfolio;
+
+            // Handle Photo vs Icon
+            const detailImg = document.getElementById('detail-img');
+            const detailPfp = document.getElementById('detail-pfp');
+
+            if (data.img && data.img !== "" && !data.img.includes('images/')) {
+                // If user provides a real path (I'll assume any path not starting with 'images/' or being a valid image is the condition for now, 
+                // but actually I'll just check if the image successfully loads or if the path is provided)
+                detailImg.src = data.img;
+                detailImg.style.display = "block";
+                detailPfp.style.display = "none";
+            } else if (data.img && data.img !== "") {
+                // Try to load the image, fallback to icon on error
+                detailImg.src = data.img;
+                detailImg.onload = () => {
+                    detailImg.style.display = "block";
+                    detailPfp.style.display = "none";
+                };
+                detailImg.onerror = () => {
+                    detailImg.style.display = "none";
+                    detailPfp.style.display = "flex";
+                };
+            } else {
+                detailImg.style.display = "none";
+                detailPfp.style.display = "flex";
+            }
 
             // Update PFP Icon based on card
             const cardIcon = card.querySelector('.pfp-container i').className;
-            document.getElementById('detail-pfp').innerHTML = `<i class="${cardIcon}"></i>`;
+            detailPfp.innerHTML = `<i class="${cardIcon}"></i>`;
 
             detailModal.classList.add('active');
         });
