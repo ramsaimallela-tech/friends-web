@@ -271,3 +271,118 @@ body {
         opacity: 0;
     }
 }
+
+/* --- Intense Shake Animations --- */
+@keyframes shake-1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-1px, -1px);
+    }
+
+    20% {
+        transform: translate(1px, 2px);
+    }
+}
+
+@keyframes shake-2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-3px, -2px);
+    }
+
+    20% {
+        transform: translate(3px, 4px);
+    }
+}
+
+@keyframes shake-3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-10px, -5px);
+    }
+
+    20% {
+        transform: translate(10px, 10px);
+    }
+}
+
+.shake-level-1 {
+    animation: shake-1 0.1s infinite;
+}
+
+.shake-level-2 {
+    animation: shake-2 0.1s infinite;
+}
+
+.shake-level-3 {
+    animation: shake-3 0.1s infinite;
+}
+
+/* --- Lightning Particles --- */
+.lightning-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.lightning-bolt-p {
+    position: absolute;
+    background: white;
+    box-shadow: 0 0 20px white, 0 0 40px var(--electric-yellow);
+    opacity: 0;
+}
+
+@keyframes lightning-flicker {
+
+    0%,
+    20%,
+    40%,
+    100% {
+        opacity: 0;
+    }
+
+    10%,
+    30% {
+        opacity: 1;
+    }
+}
+
+.strike-zoomed {
+    animation: zoom-strike 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes zoom-strike {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(3);
+        filter: brightness(5) blur(10px);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1) blur(0);
+    }
+}
