@@ -39,20 +39,60 @@ document.addEventListener('DOMContentLoaded', () => {
         const glow = chargeLevel;
         thunder.style.transform = `scale(${scale})`;
         thunder.querySelector('.thunder-bolt').style.filter = `drop-shadow(0 0 ${glow}px #fefe00) brightness(${1 + chargeLevel / 100})`;
+
+        // Intensity Shake
+        document.body.classList.remove('shake-level-1', 'shake-level-2', 'shake-level-3');
+        if (chargeLevel > 20 && chargeLevel < 50) document.body.classList.add('shake-level-1');
+        if (chargeLevel >= 50 && chargeLevel < 80) document.body.classList.add('shake-level-2');
+        if (chargeLevel >= 80) document.body.classList.add('shake-level-3');
+
+        // Spawn Lightning
+        if (Math.random() > 0.95 - (chargeLevel / 200)) {
+            createLightning();
+        }
+    }
+
+    function createLightning() {
+        const container = document.getElementById('lightning-container');
+        if (!container) return;
+
+        const l = document.createElement('div');
+        l.className = 'lightning-bolt-p';
+
+        const isHorizontal = Math.random() > 0.5;
+        if (isHorizontal) {
+            l.style.width = Math.random() * 300 + 'px';
+            l.style.height = '2px';
+        } else {
+            l.style.width = '2px';
+            l.style.height = Math.random() * 300 + 'px';
+        }
+
+        l.style.left = Math.random() * 100 + '%';
+        l.style.top = Math.random() * 100 + '%';
+        l.style.transform = `rotate(${Math.random() * 360}deg)`;
+        l.style.animation = 'lightning-flicker 0.2s linear forwards';
+
+        container.appendChild(l);
+        setTimeout(() => l.remove(), 200);
     }
 
     function triggerStrike() {
-        // High-voltage feedback
-        flash.style.animation = 'flash 0.1s ease-out 3';
+        // Stop all shaking
+        document.body.classList.remove('shake-level-1', 'shake-level-2', 'shake-level-3');
 
-        // Sudden vibration
-        if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+        // Ultimate Feedback
+        flash.style.animation = 'flash 0.15s ease-out 5';
+        document.getElementById('app').classList.add('strike-zoomed');
 
-        // Reveal the butter smooth squad hub
+        if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
+
+        // Reveal
         setTimeout(() => {
             squadHub.classList.add('active');
-            document.body.style.overflow = 'auto'; // Re-enable scroll
-        }, 300);
+            document.body.style.overflow = 'auto';
+            document.getElementById('app').classList.remove('strike-zoomed');
+        }, 400);
     }
 
     // Interaction Listeners (Desktop & Mobile)
@@ -66,15 +106,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     thunder.addEventListener('touchend', stopCharge);
 
-    // Close Interaction
-    closeBtn.addEventListener('click', () => {
-        squadHub.classList.remove('active');
-        document.body.style.overflow = 'hidden';
-        chargeLevel = 0;
-        updateChargeVisuals();
+    const detailModal = document.getElementById('detail-modal');
+    const closeDetail = document.getElementById('close-detail');
+    const friendCards = document.querySelectorAll('.friend-card');
+
+    // Open Detail Modal
+    friendCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const data = card.dataset;
+
+            document.getElementById('detail-name').innerText = data.name;
+            document.getElementById('link-email').href = `mailto:${data.email}`;
+            document.getElementById('link-github').href = data.github;
+            document.getElementById('link-insta').href = data.insta;
+            document.getElementById('link-linkedin').href = data.linkedin;
+
+            // Update PFP Icon based on card
+            const cardIcon = card.querySelector('.pfp-container i').className;
+            document.getElementById('detail-pfp').innerHTML = `<i class="${cardIcon}"></i>`;
+
+            detailModal.classList.add('active');
+        });
     });
 
-    // Hover sound/vibe (subtle)
+    closeDetail.addEventListener('click', () => {
+        detailModal.classList.remove('active');
+    });
+
+    // Close on background click
+    detailModal.addEventListener('click', (e) => {
+        if (e.target === detailModal) {
+            detailModal.classList.remove('active');
+        }
+    });
+
+    // Hover effect
     thunder.addEventListener('mouseenter', () => {
         thunder.style.filter = 'brightness(1.2)';
     });
