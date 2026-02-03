@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let chargeLevel = 0;
     let chargeInterval;
 
+    // Audio Elements
+    const sfxCharge = document.getElementById('sfx-charge');
+    const sfxStrike = document.getElementById('sfx-strike');
+
     // Create flash overlay
     const flash = document.createElement('div');
     flash.className = 'flash-effect';
@@ -14,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startCharge() {
         isCharging = true;
+        sfxCharge.currentTime = 0;
+        sfxCharge.volume = 0.1;
+        sfxCharge.play().catch(e => console.log("Audio play blocked: ", e));
+
         chargeInterval = setInterval(() => {
             if (chargeLevel < 100) {
                 chargeLevel += 2;
@@ -28,6 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function stopCharge() {
         isCharging = false;
         clearInterval(chargeInterval);
+
+        // Stop charging sound
+        sfxCharge.pause();
+        sfxCharge.currentTime = 0;
+
         if (chargeLevel < 100) {
             chargeLevel = 0;
             updateChargeVisuals();
@@ -39,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const glow = chargeLevel;
         thunder.style.transform = `scale(${scale})`;
         thunder.querySelector('.thunder-bolt').style.filter = `drop-shadow(0 0 ${glow}px #fefe00) brightness(${1 + chargeLevel / 100})`;
+
+        // Sound intensity
+        sfxCharge.volume = Math.min(0.1 + (chargeLevel / 100) * 0.9, 1.0);
+        sfxCharge.playbackRate = 1 + (chargeLevel / 100) * 0.5;
 
         // Intensity Shake
         document.body.classList.remove('shake-level-1', 'shake-level-2', 'shake-level-3');
@@ -84,6 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ultimate Feedback
         flash.style.animation = 'flash 0.15s ease-out 5';
         document.getElementById('app').classList.add('strike-zoomed');
+
+        // Play strike sound
+        sfxStrike.currentTime = 0;
+        sfxStrike.play().catch(e => console.log("Audio play blocked: ", e));
 
         if (navigator.vibrate) navigator.vibrate([100, 50, 200, 50, 300]);
 
