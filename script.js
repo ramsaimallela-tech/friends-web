@@ -153,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setLink('link-github', data.github, 'https://github.com/');
             setLink('link-insta', data.insta, 'https://www.instagram.com/');
             setLink('link-linkedin', data.linkedin, 'https://www.linkedin.com/in/');
+            setLink('link-x', data.x, 'https://x.com/');
             setLink('link-portfolio', data.portfolio);
 
             // Handle Photo vs Icon
