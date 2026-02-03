@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Electric Squad | Friends Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Main Entry View -->
+    <main id="app">
+        <section class="hero" id="home">
+            <div class="electric-backdrop"></div>
+
+            <div class="content-wrapper">
+                <h1 class="glitch-text" data-text="THE SQUAD">THE SQUAD</h1>
+                <p class="subtitle">Hold to charge the strike</p>
+
+                <!-- The Interactive Thunder Bolt -->
+                <div class="thunder-container" id="thunder-gateway">
+                    <svg class="thunder-bolt" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 2L6 18H14L12 30L26 12H18L22 2Z" fill="currentColor" />
+                    </svg>
+                    <div class="charge-ring"></div>
+                    <div class="sparks"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hidden Squad Overlay (Revealed on Strike) -->
+        <section class="squad-hub" id="squad-view">
+            <div class="container">
+                <header class="hub-header">
+                    <h2>Meet The <span class="highlight">Legends</span></h2>
+                    <button class="close-hub" id="close-btn">&times;</button>
+                </header>
+
+                <div class="friends-grid">
+                    <!-- Profile Card Template (Repeat for each friend) -->
+                    <div class="friend-card" style="--i: 1">
+                        <div class="card-inner">
+                            <div class="pfp-container">
+                                <i class="fa-solid fa-user-ninja"></i>
+                            </div>
+                            <h3>The Mastermind</h3>
+                            <p class="role">Lead Mischief Maker</p>
+                            <div class="stats">
+                                <span><i class="fa-solid fa-bolt"></i> 99 Energy</span>
+                                <span><i class="fa-solid fa-brain"></i> 100 IQ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="friend-card" style="--i: 2">
+                        <div class="card-inner">
+                            <div class="pfp-container">
+                                <i class="fa-solid fa-user-astronaut"></i>
+                            </div>
+                            <h3>The Joker</h3>
+                            <p class="role">Chief Comedy Officer</p>
+                            <div class="stats">
+                                <span><i class="fa-solid fa-face-laugh"></i> 100 Humour</span>
+                                <span><i class="fa-solid fa-pizza-slice"></i> 99 Hunger</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="friend-card" style="--i: 3">
+                        <div class="card-inner">
+                            <div class="pfp-container">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <h3>The Anchor</h3>
+                            <p class="role">Group Stability Expert</p>
+                            <div class="stats">
+                                <span><i class="fa-solid fa-shield"></i> 100 Trust</span>
+                                <span><i class="fa-solid fa-heart"></i> 99 Loyalty</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

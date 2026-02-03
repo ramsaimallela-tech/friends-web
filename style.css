@@ -1,0 +1,273 @@
+:root {
+    --bg-dark: #050505;
+    --bg-accent: #0a0a0a;
+    --electric-yellow: #fefe00;
+    --neon-blue: #00f3ff;
+    --neon-pink: #ff007f;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    /* Prevent scroll until strike */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+}
+
+.content-wrapper {
+    text-align: center;
+    z-index: 10;
+}
+
+.glitch-text {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    text-shadow: 0 0 20px rgba(254, 254, 0, 0.3);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-bottom: 3rem;
+}
+
+/* --- The Thunder Bolt Interaction --- */
+.thunder-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.thunder-bolt {
+    width: 100%;
+    height: 100%;
+    color: var(--electric-yellow);
+    filter: drop-shadow(0 0 10px var(--electric-yellow));
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+.charge-ring {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    border: 2px dashed var(--electric-yellow);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.thunder-container:hover {
+    transform: scale(1.1);
+}
+
+.thunder-container:active .thunder-bolt {
+    transform: scale(0.9);
+    filter: drop-shadow(0 0 30px var(--electric-yellow)) brightness(1.5);
+}
+
+/* --- Squad Hub (Revealed) --- */
+.squad-hub {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-dark);
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.squad-hub.active {
+    transform: translateY(0);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.hub-header h2 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.highlight {
+    color: var(--electric-yellow);
+}
+
+.close-hub {
+    background: none;
+    border: 1px solid var(--glass-border);
+    color: white;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-hub:hover {
+    background: white;
+    color: black;
+}
+
+/* --- Friend Cards --- */
+.friends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.friend-card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.squad-hub.active .friend-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--i) * 0.15s + 0.5s);
+}
+
+.card-inner {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    padding: 3rem 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.card-inner:hover {
+    border-color: var(--electric-yellow);
+    background: rgba(254, 254, 0, 0.03);
+    transform: translateY(-10px);
+}
+
+.pfp-container {
+    width: 80px;
+    height: 80px;
+    background: var(--electric-yellow);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: black;
+    box-shadow: 0 0 20px rgba(254, 254, 0, 0.4);
+}
+
+.friend-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.role {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 1.5rem;
+}
+
+.stats i {
+    color: var(--electric-yellow);
+    margin-right: 5px;
+}
+
+/* --- Electric Flash Feedback --- */
+.flash-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
